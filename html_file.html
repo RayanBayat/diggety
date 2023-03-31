@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html xmlns='https://www.w3.org/1999/xhtml' lang='' xml:lang=''>
+<head>
+	<meta charset='utf-8' />
+	<meta name='viewport' content='width=device-width, user-scalable=no' />
+	<title>Liopep</title>
+	<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+	<!-- <script type="text/javascript" src="../js/auth.js"></script>
+	<script type="text/javascript" src="website/js/auth.js"></script> -->
+	<style type='text/css'>
+
+		body {
+			touch-action: none;
+			margin: 0;
+			border: 0 none;
+			padding: 0;
+			text-align: center;
+			background-color: #efefef;
+			background-image: url("https://images.pexels.com/photos/7276723/pexels-photo-7276723.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-attachment: fixed;
+			background-size: cover;
+			-webkit-background-size: cover;
+  	  -moz-background-size: cover;
+  	  -o-background-size: cover;
+		}
+
+		#canvas {
+			display: block;
+			margin: 0;
+			color: white;
+		}
+
+		#canvas:focus {
+			outline: none;
+		}
+
+		.godot {
+			font-family: 'Noto Sans', 'Droid Sans', Arial, sans-serif;
+			color: #e0e0e0;
+			background-color: #3b3943;
+			background-image: linear-gradient(to bottom, #403e48, #35333c);
+			border: 1px solid #45434e;
+			box-shadow: 0 0 1px 1px #2f2d35;
+		}
+
+
+		/* Status display
+		 * ============== */
+
+		#status {
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			/* don't consume click events - make children visible explicitly */
+			visibility: hidden;
+		}
+
+		#status-progress {
+			width: 366px;
+			height: 7px;
+			background-color: #ffe3c9;
+			border: 1px solid #f26627;
+			padding: 0px;
+			box-shadow: 0 0 2px 1px #1B1C22;
+			border-radius: 2px;
+			visibility: visible;
+		}
+
+		@media only screen and (orientation:portrait) {
+			#status-progress {
+				width: 61.8%;
+			}
+		}
+
+		.input_video {
+			width : 200px;
+			height : 200px;
+			position:absolute;
+			z-index : 20000;
+			top :0px;
+			left :0px;
+			display: block;
+			-webkit-transform : scaleX(-1);
+		}
+
+		#status-progress-inner {
+			height: 100%;
+			width: 0;
+			box-sizing: border-box;
+			transition: width 0.5s linear;
+			background-color: #f26627;
+		}
+
+		#status-indeterminate {
+			visibility: visible;
+			position: relative;
+		}
+
+		#status-indeterminate > div {
+			width: 4.5px;
+			height: 0;
+			border-style: solid;
+			border-width: 9px 3px 0 3px;
+			border-color: #2b2b2b transparent transparent transparent;
+			transform-origin: center 21px;
+			position: absolute;
+		}
+
+		#status-indeterminate > div:nth-child(1) { transform: rotate( 22.5deg); }
+		#status-indeterminate > div:nth-child(2) { transform: rotate( 67.5deg); }
+		#status-indeterminate > div:nth-child(3) { transform: rotate(112.5deg); }
+		#status-indeterminate > div:nth-child(4) { transform: rotate(157.5deg); }
+		#status-indeterminate > div:nth-child(5) { transform: rotate(202.5deg); }
+		#status-indeterminate > div:nth-child(6) { transform: rotate(247.5deg); }
+		#status-indeterminate > div:nth-child(7) { transform: rotate(292.5deg); }
+		#status-indeterminate > div:nth-child(8) { transform: rotate(337.5deg); }
+
+		#status-notice {
+			margin: 0 100px;
+			line-height: 1.3;
+			visibility: visible;
+			padding: 4px 6px;
+			visibility: visible;
+		}
+	</style>
+$GODOT_HEAD_INCLUDE
+</head>
+<body>
+	<canvas id='canvas'>
+		HTML5 canvas appears to be unsupported in the current browser.<br />
+		Please try updating or use a different browser.
+	</canvas>
+	<video class="input_video"></video>
+	<div id='status'>
+		<div id='status-progress' style='display: none;' oncontextmenu='event.preventDefault();'><div id ='status-progress-inner'></div></div>
+		<div id='status-indeterminate' style='display: none;' oncontextmenu='event.preventDefault();'>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+		<div id='status-notice' class='godot' style='display: none;'></div>
+	</div>
+
+	<script type='text/javascript' src='$GODOT_URL'></script>
+
+	<script type='text/javascript'>//<![CDATA[
+
+const GODOT_CONFIG=$GODOT_CONFIG;var engine=new Engine(GODOT_CONFIG);!function(){const e=800;var t=document.getElementById("status-progress"),n=document.getElementById("status-progress-inner"),r=document.getElementById("status-indeterminate"),o=document.getElementById("status-notice"),a=!0,i="hidden",s=[];function l(e){if(i!==e&&a){switch([t,r,o].forEach(e=>{e.style.display="none"}),s=s.filter(function(e){return e!=d}),e){case"progress":t.style.display="block";break;case"indeterminate":r.style.display="block",s.push(d);break;case"notice":o.style.display="block";break;case"hidden":break;default:throw new Error("Invalid status mode")}i=e}}function d(t){var n=Math.floor(t/e%8);""==r.children[n].style.borderTopColor&&(Array.prototype.slice.call(r.children).forEach(e=>{e.style.borderTopColor=""}),r.children[n].style.borderTopColor="#dfdfdf")}function c(e){var t=e.message||e;console.error(t),function(e){for(;o.lastChild;)o.removeChild(o.lastChild);e.split("\n").forEach(e=>{o.appendChild(document.createTextNode(e)),o.appendChild(document.createElement("br"))})}(t),l("notice"),a=!1}(requestAnimationFrame(function e(t){s.forEach(e=>e(t)),requestAnimationFrame(e)}),Engine.isWebGLAvailable())?(l("indeterminate"),canvas.getContext("webgl").clearColor(0,0,0,0),engine.startGame({onProgress:function(e,t){t>0?(n.style.width=e/t*100+"%",l("progress"),e===t&&setTimeout(()=>{l("indeterminate")},500)):l("indeterminate")}}).then(()=>{l("hidden"),a=!1},c)):c("WebGL not available")}();		</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+<script type="module">
+const videoElement=document.getElementsByClassName("input_video")[0],no_result=JSON.stringify("");function onResults(e){e.poseLandmarks?window.results=JSON.stringify(e.poseLandmarks):window.results=no_result,e.poseWorldLandmarks?window.world_results=JSON.stringify(e.poseWorldLandmarks):window.world_results=no_result}const pose=new Pose({locateFile:e=>`https://cdn.jsdelivr.net/npm/@mediapipe/pose/${e}`});pose.setOptions({selfieMode:"flip_horizontal",modelComplexity:0,smoothLandmarks:!0,enableSegmentation:!1,smoothSegmentation:!0,minDetectionConfidence:.3,minTrackingConfidence:.3}),pose.onResults(onResults);const camera=new Camera(videoElement,{onFrame:async()=>{await pose.send({image:videoElement})}});window.camera=camera,window.videoElement=videoElement,camera.start();	</script>
+	</body>
+</html>

@@ -1,0 +1,16 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+
+[deps]
+
+files=[ "res://LOCAL_HUD/translations.en.translation", "res://LOCAL_HUD/translations.sv.translation" ]
+
+source_file="res://LOCAL_HUD/translations.csv"
+dest_files=[ "res://LOCAL_HUD/translations.en.translation", "res://LOCAL_HUD/translations.sv.translation" ]
+
+[params]
+
+compress=true
+delimiter=0

@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://LOCAL_HUD/design/current/fonts/header_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://diggety/assets/instructions/distance.v2.png" type="Texture" id=2]
+[ext_resource path="res://LOCAL_HUD/design/current/main_theme.tres" type="Theme" id=3]
+
+[node name="instructs" type="Control"]
+margin_right = 1920.0
+margin_bottom = 1080.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 3 )
+color = Color( 0.898039, 0.898039, 0.898039, 1 )
+
+[node name="stand_up" type="Label" parent="."]
+margin_left = 84.0
+margin_top = 793.0
+margin_right = 541.0
+margin_bottom = 844.0
+theme = ExtResource( 3 )
+custom_fonts/font = ExtResource( 1 )
+text = "INSTR_STAND"
+align = 1
+valign = 1
+clip_text = true
+
+[node name="message" type="Label" parent="."]
+margin_left = 743.0
+margin_top = 403.0
+margin_right = 1200.0
+margin_bottom = 508.0
+theme = ExtResource( 3 )
+custom_fonts/font = ExtResource( 1 )
+text = "Skriv här how to 
+play game with body "
+align = 1
+valign = 1
+clip_text = true
+
+[node name="DistanceToSceren" type="Sprite" parent="."]
+position = Vector2( 334, 510 )
+scale = Vector2( 0.852959, 0.902313 )
+texture = ExtResource( 2 )

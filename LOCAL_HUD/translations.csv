@@ -1,0 +1,35 @@
+KEY,en,sv
+LOADING,Loading game...,Laddar in spel...
+WARNING_START,Loading game...,Laddar in spel...
+WARNING_TO_CLOSE,Standing too close! Move back.,Står för nära! Flytta bakåt.
+WARNING_ON_EDGE,Moving out of the camera's view!,Du rör dig ut ur kamerans synfält!
+HIGH_SCORE,High Score,Highscore
+SCORE,Score,Poäng
+QUIT_GAME,Quit Game,Avsluta spel
+QUIT,Quit,Avsluta
+LEVEL,Level,Level
+RESTART,Restart,Börja om
+COUNTDOWN,Will begin in,Börjar om om 
+TIME_OUT,Time Out,Tiden slut
+INSTR_STAND,Stand to Play, Stå för att spela
+RESTARTING_IN,Restarting in,Omstart om 
+INSTR_2STEAR, Steer Aircraft, Styr flygplan
+INSTR_STEAR_MOVE, Move Left/Right, Gå höger/vänster
+INSTR_SHOOT, Fire, Skjut
+INSTR_SHOOT_MOVE, Raise both arms, Lyft båda armarna
+INSTR_LEFT,Left,Vänster
+INSTR_RIGHT,Right,Höger 
+INSTR_UP,Forward,Framåt 
+MOVE_INSTR,Lift one arm or both, Lyft en arm eller båda
+INSTR_STAND,Stand to Play,Stå för att spela
+SQUAT,Squat to pump,Knäböj för att pumpa
+START,Start,Starta
+AIM,Turn shoulders to aim,Vrid axlar för att sikta 
+SHOOT,Hands above nose to shoot, Händerna över näsan för att skjuta
+TOP,Top,Top
+INSTR_BODY_SIDE,Stand half sideways,Stå halvt i sidled
+INSTR_KNEE,Knee over hip,Knä över höft
+INSTR_GUIDE,Follow the guide's moves,Följ guidens rörelser
+PROG_NORM,Whole body,Hela kroppen
+PROG_UPPER,Upper body,Överkroppen
+PROG_LOWER,Lower body,Underkroppen
